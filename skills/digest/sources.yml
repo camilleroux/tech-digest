@@ -4,9 +4,10 @@
 
 sources:
   - name: Hacker News
-    url: https://hnrss.org/frontpage?points=100
+    url: https://www.daemonology.net/hn-daily/index.rss
     site: https://news.ycombinator.com
-    description: Top tech stories from Hacker News (100+ points)
+    description: Top 5 stories per day from Hacker News Daily
+    parser: hn-daily
     limit: 5
 
   - name: Lobste.rs
@@ -15,7 +16,4 @@ sources:
     description: Curated tech links voted on by the community
     limit: 4
 
-  - name: The Changelog
-    url: https://changelog.com/news.xml
-    site: https://changelog.com
-    description: News and podcasts for developers
+

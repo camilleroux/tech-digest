@@ -74,6 +74,31 @@ def parse_score(raw_description):
     return int(m.group(1)) if m else None
 
 
+def parse_hn_daily(root, cutoff_date, source_name, limit):
+    """Parse daemonology.net HN daily feed — one RSS item per day, top 10 articles in HTML description."""
+    articles = []
+    for item in root.findall(".//item"):
+        date_str = item.findtext("pubDate", "")
+        pub_date = parse_rss_date(date_str)
+        if not pub_date or pub_date.date() < cutoff_date:
+            continue
+        desc_html = item.findtext("description", "")
+        # Extract article links: <span class="storylink"><a href="URL">TITLE</a></span>
+        links = re.findall(r'class="storylink"><a href="([^"]+)">([^<]+)</a>', desc_html)
+        # Articles are already ranked by HN score — take top N
+        for url, title in links[:limit]:
+            articles.append({
+                "date": pub_date,
+                "title": html.unescape(title),
+                "link": url,
+                "category": "N/A",
+                "description": "",
+                "source": source_name,
+                "score": None,
+            })
+    return articles
+
+
 def fetch_feed(source, cutoff_date):
     """Fetch a single RSS/Atom feed and return parsed articles."""
     url = source["url"]
@@ -91,6 +116,11 @@ def fetch_feed(source, cutoff_date):
         root = ET.fromstring(data)
     except ET.ParseError as e:
         return articles, f"ERROR: {name} - XML parse error: {e}"
+
+    # Dedicated parser for daemonology.net HN daily feed
+    if source.get("parser") == "hn-daily":
+        limit = int(source.get("limit", 5))
+        return parse_hn_daily(root, cutoff_date, name, limit), None
 
     ns = {"dc": "http://purl.org/dc/elements/1.1/", "atom": "http://www.w3.org/2005/Atom"}
     items = root.findall(".//item")
@@ -150,14 +180,21 @@ def fetch_feed(source, cutoff_date):
                     "score": None,
                 })
 
-    # If limit is set: keep the top N by score (scored articles first, then by recency)
+    # If limit is set: keep the top N per DAY by score (scored articles first, then by recency)
     limit = source.get("limit")
     if limit:
-        articles.sort(
-            key=lambda a: (a["score"] is not None, a["score"] or 0, a["date"]),
-            reverse=True,
-        )
-        articles = articles[:int(limit)]
+        from collections import defaultdict
+        limit = int(limit)
+        by_day = defaultdict(list)
+        for a in articles:
+            by_day[a["date"].date()].append(a)
+        articles = []
+        for day_articles in by_day.values():
+            day_articles.sort(
+                key=lambda a: (a["score"] is not None, a["score"] or 0, a["date"]),
+                reverse=True,
+            )
+            articles.extend(day_articles[:limit])
 
     return articles, None
 
