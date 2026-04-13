@@ -5,7 +5,7 @@
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB.svg)](https://www.python.org)
 
-A [Claude Code](https://claude.ai/claude-code) skill that aggregates top developer RSS feeds and produces a clean daily digest — sorted by day, deduplicated, filtered by vote count.
+A [Claude Code](https://claude.ai/claude-code) skill that aggregates top developer RSS feeds and produces a structured daily digest — sorted by day, deduplicated, filtered by vote count.
 
 ![Demo of /digest](demo.gif)
 
@@ -31,7 +31,7 @@ Type `/digest` in Claude Code and get a structured recap of the best tech articl
 - Aggregates **RSS 2.0 and Atom** feeds from top developer sources
 - **Filters by vote count** — only the best articles per source, not just the most recent
 - Recap grouped by **day**, with automatic deduplication
-- Ultra-fast: **~1 second** (pure Python stdlib, zero external dependencies)
+- Pure Python stdlib, **zero external dependencies** (no pip install)
 - **Parallel feed fetching** (multi-thread)
 - Fully configurable sources via a simple YAML file
 - Works on **macOS and Linux**
