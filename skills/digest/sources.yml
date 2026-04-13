@@ -1,0 +1,21 @@
+# RSS sources for the tech digest
+# Add a source: copy a block below with name + url
+# limit: keep the N highest-scored articles per day (scored sources only)
+
+sources:
+  - name: Hacker News
+    url: https://hnrss.org/frontpage?points=100
+    site: https://news.ycombinator.com
+    description: Top tech stories from Hacker News (100+ points)
+    limit: 5
+
+  - name: Lobste.rs
+    url: https://lobste.rs/rss
+    site: https://lobste.rs
+    description: Curated tech links voted on by the community
+    limit: 4
+
+  - name: The Changelog
+    url: https://changelog.com/news.xml
+    site: https://changelog.com
+    description: News and podcasts for developers

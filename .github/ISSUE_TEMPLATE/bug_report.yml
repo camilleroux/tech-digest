@@ -1,0 +1,24 @@
+name: Bug Report
+description: Report a bug with the /digest skill
+labels: ["bug"]
+body:
+  - type: input
+    id: os
+    attributes:
+      label: OS and Python version
+      placeholder: "e.g. macOS 15, Python 3.12"
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command run
+      placeholder: "/digest 7"
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error message
+    validations:
+      required: true

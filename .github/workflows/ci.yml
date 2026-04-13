@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax check fetch_feeds.py
+        run: python3 -m py_compile skills/digest/fetch_feeds.py
+
+      - name: Validate sources.yml is parseable
+        run: |
+          python3 - <<'EOF'
+          import sys; sys.path.insert(0, 'skills/digest')
+          from fetch_feeds import load_sources
+          sources = load_sources()
+          assert len(sources) >= 1, 'No sources found'
+          for s in sources:
+              assert 'name' in s and 'url' in s, f'Invalid source: {s}'
+          print(f'{len(sources)} sources OK')
+          EOF
+
+      - name: Dry run fetch (timeout 30s)
+        timeout-minutes: 1
+        run: python3 skills/digest/fetch_feeds.py 1 | head -5
