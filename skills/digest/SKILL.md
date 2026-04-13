@@ -3,7 +3,7 @@ name: digest
 description: >
   Tech digest for developers. Aggregates top RSS feeds (Hacker News, Lobste.rs,
   The Changelog, etc.) and produces a daily recap sorted by day.
-  Use /digest for the last 7 days, /digest 3 for 3 days, /digest 14 for 14 days.
+  Use /digest for the last 3 days, /digest 7 for 7 days, /digest 14 for 14 days.
   Keywords: digest, recap, tech news, dev, RSS, hacker news.
 user-invokable: true
 argument-hint: "[number_of_days]"
@@ -22,8 +22,8 @@ Follow these steps in order:
 
 ### Step 1: Parse the argument
 
-- If the user passes a number (e.g. `/digest 3`), use it as the number of days.
-- Otherwise, default to **7 days**.
+- If the user passes a number (e.g. `/digest 7`), use it as the number of days.
+- Otherwise, default to **3 days**.
 - Store this value as `DAYS`.
 
 ### Step 2: Fetch and parse articles
@@ -76,6 +76,8 @@ Dates in readable English format (e.g. "April 7, 2026").
 
 ### Sources
 - [Source name](site URL) -- Short description
+
+*Made with <3 by [Camille Roux](https://www.camilleroux.com) · [X](https://x.com/CamilleRoux) · [LinkedIn](https://www.linkedin.com/in/camilleroux) · [Bluesky](https://bsky.app/profile/camilleroux.com) · [Mastodon](https://mastodon.social/@camilleroux)*
 ```
 
 ### Step 4: Handle errors
