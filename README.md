@@ -11,7 +11,7 @@ A [Claude Code](https://claude.ai/claude-code) skill that aggregates top develop
 
 ## What it does
 
-Type `/digest` in Claude Code and get a structured recap of the best tech articles from the last 7 days — sourced from Hacker News (100+ points), Lobste.rs, The Changelog, and more.
+Type `/digest` in Claude Code and get a structured recap of the best tech articles from the last 3 days — sourced from Hacker News Daily and Lobste.rs.
 
 ```
 # Tech Digest -- April 7 to April 13, 2026
@@ -70,8 +70,8 @@ Prefer the git clone method so you can inspect the script before running it.
 In Claude Code:
 
 ```
-/digest          # Recap of the last 7 days (default)
-/digest 3        # Recap of the last 3 days
+/digest          # Recap of the last 3 days (default)
+/digest 7        # Recap of the last 7 days
 /digest 14       # Recap of the last 14 days
 ```
 
@@ -79,9 +79,8 @@ In Claude Code:
 
 | Source | Description |
 |--------|-------------|
-| [Hacker News](https://news.ycombinator.com) | Top tech stories with 100+ points (via hnrss.org) |
+| [Hacker News](https://news.ycombinator.com) | Top 5 stories per day from Hacker News Daily |
 | [Lobste.rs](https://lobste.rs) | Curated tech links voted on by the developer community |
-| [The Changelog](https://changelog.com) | News and podcasts for developers |
 
 ## Add a source
 
